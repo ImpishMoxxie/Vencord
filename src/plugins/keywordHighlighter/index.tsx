@@ -6,12 +6,14 @@
 
 import { DataStore } from "@api/index";
 import { definePluginSettings } from "@api/Settings";
+import { Button } from "@components/Button";
 import { Flex } from "@components/Flex";
+import { Heading } from "@components/Heading";
 import { DeleteIcon } from "@components/Icons";
 import { Devs } from "@utils/constants";
 import { useForceUpdater } from "@utils/react";
 import definePlugin, { OptionType } from "@utils/types";
-import { Button, Forms, React, TextInput, Tooltip, useEffect, useState } from "@webpack/common";
+import { React, TextInput, Tooltip, useEffect, useState } from "@webpack/common";
 import { FunctionComponent } from "react";
 
 import { CustomKeywords, GenericKeywords, setKeywords, ToneKeywords } from "./keywords";
@@ -171,7 +173,7 @@ function KeywordHighligher({ title, keywordsMap, keywordsKey, update }: KeywordH
 
     return (
         <>
-            <Forms.FormTitle tag="h4">{title}</Forms.FormTitle>
+            <Heading tag="h4">{title}</Heading>
             <Flex flexDirection="column" style={{ gap: "0.5em" }}>
                 {
                     rulesArray.map((rule, index) =>
@@ -193,7 +195,7 @@ function KeywordHighligher({ title, keywordsMap, keywordsKey, update }: KeywordH
                                     />
                                 </Flex>
                                 <Button
-                                    size={Button.Sizes.MIN}
+                                    size="min"
                                     onClick={() => onClickRemove(index)}
                                     style={{
                                         background: "none",
@@ -288,7 +290,7 @@ const customRules: Rules = {
                             onMouseEnter={onMouseEnter}
                             onMouseLeave={onMouseLeave}
                             style={{
-                                backgroundColor: "var(--background-modifier-selected)",
+                                backgroundColor: "var(--background-mod-strong, var(--background-modifier-selected, rgba(128, 128, 128, 0.3)))",
                                 borderRadius: 3,
                                 padding: "0 2px",
                             }}>
@@ -306,8 +308,7 @@ export default definePlugin({
     description: "Adds tooltips for keywords",
     authors: [
         Devs.Moxxie,
-        Devs.Ethan,
-        Devs.Fres
+        Devs.Ethan
     ],
 
     settings,

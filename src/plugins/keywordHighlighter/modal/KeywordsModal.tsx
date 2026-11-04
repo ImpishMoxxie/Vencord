@@ -7,21 +7,22 @@
 import "./index.css";
 
 import { classNameFactory } from "@api/Styles";
-import { ModalRoot, ModalSize, openModal } from "@utils/modal";
+import ErrorBoundary from "@components/ErrorBoundary";
+import { RenderModalProps } from "@vencord/discord-types";
+import { Modal, openModal } from "@webpack/common";
 
 interface KeywordsModalProps {
     keywords: Record<string, string>;
     title: string;
-    modalProps: any;
+    modalProps: RenderModalProps;
 }
 
 export function IndicatorsModal({ keywords, title, modalProps }: KeywordsModalProps) {
     const cl = classNameFactory("vc-keyword-highlighter-");
 
     return (
-        <ModalRoot {...modalProps} size={ModalSize.SMALL}>
+        <Modal {...modalProps} size="sm" title={title}>
             <div id={cl("modal")}>
-                <h1>{title}</h1>
                 <div className={cl("indicator-container")}>
                     <ul className={cl("indicator-links")}>
                         {Object.entries(keywords).map(([item, tooltip]) => (
@@ -34,8 +35,8 @@ export function IndicatorsModal({ keywords, title, modalProps }: KeywordsModalPr
                     </ul>
                 </div>
             </div>
-        </ModalRoot>
+        </Modal>
     );
 }
 
-export const openIndicatorsModal = (keywords: Record<string, string>, title: string) => openModal(modalProps => <IndicatorsModal keywords={keywords} title={title} modalProps={modalProps} />);
+export const openIndicatorsModal = (keywords: Record<string, string>, title: string) => openModal(modalProps => <ErrorBoundary><IndicatorsModal keywords={keywords} title={title} modalProps={modalProps} /></ErrorBoundary>);
